@@ -37,16 +37,22 @@ pipeline {
         stage("Update: Kubernetes manifests"){
             steps{
                 script{
-                    dir('kubernetes'){
-                        sh """
-                            sed -i -e s/wanderlust-backend-beta.*/wanderlust-backend-beta:${params.BACKEND_DOCKER_TAG}/g backend.yaml
-                        """
-                    }
-                    
-                    dir('kubernetes'){
-                        sh """
-                            sed -i -e s/wanderlust-frontend-beta.*/wanderlust-frontend-beta:${params.FRONTEND_DOCKER_TAG}/g frontend.yaml
-                        """
+                    dir('kubernetes') {
+                        if (fileExists('backend.yaml')) {
+                            sh """
+                                sed -i -e 's#wanderlust-backend-beta.*#wanderlust-backend-beta:${params.BACKEND_DOCKER_TAG}#g' backend.yaml
+                            """
+                        } else {
+                            echo "backend.yaml not found. Skipping backend image update."
+                        }
+
+                        if (fileExists('frontend.yaml')) {
+                            sh """
+                                sed -i -e 's#wanderlust-frontend-beta.*#wanderlust-frontend-beta:${params.FRONTEND_DOCKER_TAG}#g' frontend.yaml
+                            """
+                        } else {
+                            echo "frontend.yaml not found. Skipping frontend image update."
+                        }
                     }
                     
                 }
