@@ -31,7 +31,7 @@ pipeline {
         
         stage('Git: Code Checkout') {
             steps {
-                scrimain
+                script{
                     code_checkout("https://github.com/usertan123/wanderlust-project.git","main")
                 }
             }
