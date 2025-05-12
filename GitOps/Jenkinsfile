@@ -38,20 +38,20 @@ pipeline {
             steps{
                 script{
                     dir('kubernetes') {
-                        if (fileExists('backend.yaml')) {
+                        if (fileExists('backend.yml')) {
                             sh """
-                                sed -i -e 's#wanderlust-backend-beta.*#wanderlust-backend-beta:${params.BACKEND_DOCKER_TAG}#g' backend.yaml
+                                sed -i -e 's#wanderlust-backend-beta.*#wanderlust-backend-beta:${params.BACKEND_DOCKER_TAG}#g' backend.yml
                             """
                         } else {
-                            echo "backend.yaml not found. Skipping backend image update."
+                            echo "backend.yml not found. Skipping backend image update."
                         }
 
-                        if (fileExists('frontend.yaml')) {
+                        if (fileExists('frontend.yml')) {
                             sh """
-                                sed -i -e 's#wanderlust-frontend-beta.*#wanderlust-frontend-beta:${params.FRONTEND_DOCKER_TAG}#g' frontend.yaml
+                                sed -i -e 's#wanderlust-frontend-beta.*#wanderlust-frontend-beta:${params.FRONTEND_DOCKER_TAG}#g' frontend.yml
                             """
                         } else {
-                            echo "frontend.yaml not found. Skipping frontend image update."
+                            echo "frontend.yml not found. Skipping frontend image update."
                         }
                     }
                     
@@ -114,6 +114,9 @@ pipeline {
                 body: """
                     <html>
                     <body>
+                        <div style="background-color:rgb(46, 136, 221); padding: 10px; margin-bottom: 10px;">
+                            <p style="color: black; font-weight: bold;">Build Number: FAILURE </p>
+                        </div>
                         <div style="background-color: #FFA07A; padding: 10px; margin-bottom: 10px;">
                             <p style="color: black; font-weight: bold;">Project: ${env.JOB_NAME}</p>
                         </div>
