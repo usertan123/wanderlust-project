@@ -4,7 +4,7 @@
 INSTANCE_ID="i-0e1b5f226499e7edb"
 
 # Retrieve the public IP address of the specified EC2 instance
-ipv4_address=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --region us-east-2 --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
+ipv4_address=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --region us-east-1 --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
 # Path to the .env file
 file_to_find="../backend/.env.docker"
