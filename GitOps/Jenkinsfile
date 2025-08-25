@@ -71,10 +71,11 @@ pipeline {
                         git add .
                         
                         echo "Commiting changes: "
-                        git commit -m "Updated environment variables"
                         git config --global user.email "tan2018carlson@gmail.com"
                         git config --global user.name "usertan123"
-                        
+
+                        git commit -m "Updated environment variables" || echo "No changes to commit"
+
                         echo "Pushing changes to github: "
                         git push https://github.com/usertan123/wanderlust-project.git main
                     '''
@@ -135,4 +136,5 @@ pipeline {
     }
 
 }
+
 
